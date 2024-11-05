@@ -1,0 +1,209 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>四数之和 | Stewart&#39;s Home</title>
+
+<link rel="shortcut icon" href="https://liutianci99.github.io//favicon.ico?v=1730767734153">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://liutianci99.github.io//styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Stewart&#39;s Home
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    Home
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/code" class="menu gt-a-link">
+                    Code
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/read" class="menu gt-a-link">
+                    Read
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1730767734153"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    四数之和
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2024-11-05 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="题目">题目</h2>
+<blockquote>
+<p>Leetcode 18：</p>
+<p>给你一个由 <code>n</code> 个整数组成的数组 <code>nums</code> ，和一个目标值 <code>target</code> 。请你找出并返回满足下述全部条件且<strong>不重复</strong>的四元组 <code>[nums[a], nums[b], nums[c], nums[d]]</code> （若两个四元组元素一一对应，则认为两个四元组重复）：</p>
+<ul>
+<li><code>0 &lt;= a, b, c, d &lt; n</code></li>
+<li><code>a</code>、<code>b</code>、<code>c</code> 和 <code>d</code> <strong>互不相同</strong></li>
+<li><code>nums[a] + nums[b] + nums[c] + nums[d] == target</code></li>
+</ul>
+<p>你可以按 <strong>任意顺序</strong> 返回答案 。</p>
+</blockquote>
+<h2 id="题解">题解</h2>
+<ul>
+<li>
+<p>双指针</p>
+<pre><code class="language-cpp">class Solution {
+public:
+    vector&lt;vector&lt;int&gt;&gt; fourSum(vector&lt;int&gt;&amp; nums, int target) {
+        sort(nums.begin(), nums.end());
+        vector&lt;vector&lt;int&gt;&gt; result;
+        for (int i = 0; i &lt; nums.size(); i ++) {
+            if (nums[i] &gt; 0 &amp;&amp; nums[i] &gt; target) break;
+            if (i &gt; 0 &amp;&amp; nums[i - 1] == nums[i]) continue;
+            for (int j = i + 1; j &lt; nums.size(); j ++) {
+                if (nums[j] + nums[i] &gt; 0 &amp;&amp; nums[j] + nums[i] &gt; target) break;
+                if (j &gt; i + 1 &amp;&amp; nums[j] == nums[j - 1]) continue;
+                int left = j + 1;
+                int right = nums.size() - 1;
+                while (left &lt; right) {
+                    if ((long)nums[i] + nums[j] + nums[left] + nums[right] &gt; target) {
+                        right --;
+                    } else if ((long)nums[i] + nums[j] + nums[left] + nums[right] &lt; target) {
+                        left ++;
+                    } else {
+                        result.push_back(vector&lt;int&gt;{nums[i], nums[j], nums[left], nums[right]});
+                        while (left &lt; right &amp;&amp; nums[left] == nums[left + 1]) left ++;
+                        while (left &lt; right &amp;&amp; nums[right] == nums[right -1]) right --;
+                        left ++;
+                        right --;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+};
+</code></pre>
+<p>和三数之和差不多，关键在于剪枝、去重。以及四数相加可能造成溢出，加上long变成长整型。</p>
+</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://liutianci99.github.io/post/luo-xuan-shu-zu/" class="post-title gt-a-link">
+                    螺旋数组
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">code, write and think</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        cherish your time
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://liutianci99.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
