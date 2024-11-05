@@ -1,0 +1,245 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>设计链表 | Stewart&#39;s Home</title>
+
+<link rel="shortcut icon" href="https://liutianci99.github.io//favicon.ico?v=1730795219332">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://liutianci99.github.io//styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Stewart&#39;s Home
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/Home" class="menu gt-a-link">
+                    Home
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1730795219332"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    设计链表
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2024-11-05 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="题目">题目</h2>
+<blockquote>
+<p>Leetcode 707：</p>
+<p>你可以选择使用单链表或者双链表，设计并实现自己的链表。</p>
+<p>单链表中的节点应该具备两个属性：<code>val</code> 和 <code>next</code> 。<code>val</code> 是当前节点的值，<code>next</code> 是指向下一个节点的指针/引用。</p>
+<p>如果是双向链表，则还需要属性 <code>prev</code> 以指示链表中的上一个节点。假设链表中的所有节点下标从 <strong>0</strong> 开始。</p>
+<p>实现 <code>MyLinkedList</code> 类：</p>
+<ul>
+<li><code>MyLinkedList()</code> 初始化 <code>MyLinkedList</code> 对象。</li>
+<li><code>int get(int index)</code> 获取链表中下标为 <code>index</code> 的节点的值。如果下标无效，则返回 <code>-1</code> 。</li>
+<li><code>void addAtHead(int val)</code> 将一个值为 <code>val</code> 的节点插入到链表中第一个元素之前。在插入完成后，新节点会成为链表的第一个节点。</li>
+<li><code>void addAtTail(int val)</code> 将一个值为 <code>val</code> 的节点追加到链表中作为链表的最后一个元素。</li>
+<li><code>void addAtIndex(int index, int val)</code> 将一个值为 <code>val</code> 的节点插入到链表中下标为 <code>index</code> 的节点之前。如果 <code>index</code> 等于链表的长度，那么该节点会被追加到链表的末尾。如果 <code>index</code> 比长度更大，该节点将 <strong>不会插入</strong> 到链表中。</li>
+<li><code>void deleteAtIndex(int index)</code> 如果下标有效，则删除链表中下标为 <code>index</code> 的节点。</li>
+</ul>
+</blockquote>
+<h2 id="题解">题解</h2>
+<ul>
+<li>
+<p>单链表</p>
+<pre><code class="language-cpp">class MyLinkedList {
+    struct Linkedlist {
+        int val;
+        Linkedlist* next;
+        Linkedlist(int val) : val(val), next(nullptr) {}
+    };
+
+public:
+    MyLinkedList() {
+        dummy_head = new Linkedlist(0);
+        length = 0;
+    }
+
+    int get(int index) {
+        if (index &lt; 0 || index &gt;= length) {
+            return -1;
+        }
+        Linkedlist* curr = dummy_head-&gt;next;
+        while (index--) {
+            curr = curr-&gt;next;
+        }
+        return curr-&gt;val;
+    }
+
+    void addAtHead(int val) {
+        Linkedlist* new_node = new Linkedlist(val);
+        Linkedlist* curr = dummy_head-&gt;next;
+        dummy_head-&gt;next = new_node;
+        new_node-&gt;next = curr;
+        length++;
+    }
+
+    void addAtTail(int val) {
+        Linkedlist* curr = dummy_head;
+        while (curr-&gt;next != nullptr) {
+            curr = curr-&gt;next;
+        }
+        Linkedlist* new_node = new Linkedlist(val);
+        curr-&gt;next = new_node;
+        length++;
+    }
+
+    void addAtIndex(int index, int val) {
+        if (index &lt; 0 || index &gt; length) {
+            return;
+        }
+        if (index == length) {
+            addAtTail(val);
+            return;
+        }
+        Linkedlist* curr = dummy_head;
+        while (index--) {
+            curr = curr-&gt;next;
+        }
+        Linkedlist* tmp = curr-&gt;next;
+        Linkedlist* new_node = new Linkedlist(val);
+        curr-&gt;next = new_node;
+        new_node-&gt;next = tmp;
+        length++;
+    }
+
+    void deleteAtIndex(int index) {
+        if (index &lt; 0 || index &gt;= length) {
+            return;
+        }
+        Linkedlist* curr = dummy_head;
+        while (index--) {
+            curr = curr-&gt;next;
+        }
+        Linkedlist* node_to_delete = curr-&gt;next;
+        curr-&gt;next = curr-&gt;next-&gt;next;
+        delete node_to_delete;  // Properly delete the node to avoid memory leaks
+        length--;
+    }
+
+private:
+    int length;
+    Linkedlist* dummy_head;
+};
+</code></pre>
+</li>
+</ul>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://liutianci99.github.io/post/you-xu-shu-zu-de-ping-fang/" class="post-title gt-a-link">
+                    有序数组的平方
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">code, write and think</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        cherish your time
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://liutianci99.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
